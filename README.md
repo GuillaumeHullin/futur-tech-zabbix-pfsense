@@ -39,16 +39,16 @@ For example, from pfSense shell:
 
 ```bash
 mkdir /root/scripts
-curl -o /root/scripts/pfsense_zbx.php https://raw.githubusercontent.com/rbicelli/pfsense-zabbix-template/master/pfsense_zbx.php
+curl -o /root/scripts/pfsense_zbx.php https://raw.githubusercontent.com/GuillaumeHullin/futur-tech-pfsense-zabbix/master/pfsense_zbx.php
 ```
 
 or, from **Diagnostics/Command Prompt** input this one-liner:
 
 ```bash
-mkdir /root/scripts && curl -o /root/scripts/pfsense_zbx.php https://raw.githubusercontent.com/rbicelli/pfsense-zabbix-template/master/pfsense_zbx.php
+mkdir /root/scripts && curl -o /root/scripts/pfsense_zbx.php https://raw.githubusercontent.com/GuillaumeHullin/futur-tech-pfsense-zabbix/master/pfsense_zbx.php
 ```
 
-Then install package "Zabbix Agent 4" on your pfSense Box
+Then install package "Zabbix Agent 5" on your pfSense Box
 
 
 In Advanced Features-> User Parameters
