@@ -4,7 +4,6 @@
 
 This is a pfSense active template for Zabbix, based on Standard Agent and a php script using pfSense functions library for monitoring specific data.
 
-
 Tested with pfSense 2.4.x, Zabbix 4.0, Zabbix 5.0
 
 ## What it does
@@ -39,13 +38,13 @@ For example, from pfSense shell:
 
 ```bash
 mkdir /root/scripts
-curl -o /root/scripts/pfsense_zbx.php https://raw.githubusercontent.com/GuillaumeHullin/futur-tech-pfsense-zabbix/master/pfsense_zbx.php
+curl -o /root/scripts/pfsense_zbx.php https://raw.githubusercontent.com/Futur-Tech/futur-tech-pfsense-zabbix/master/pfsense_zbx.php
 ```
 
 or, from **Diagnostics/Command Prompt** input this one-liner:
 
 ```bash
-mkdir /root/scripts && curl -o /root/scripts/pfsense_zbx.php https://raw.githubusercontent.com/GuillaumeHullin/futur-tech-pfsense-zabbix/master/pfsense_zbx.php
+mkdir /root/scripts && curl -o /root/scripts/pfsense_zbx.php https://raw.githubusercontent.com/Futur-Tech/futur-tech-pfsense-zabbix/master/pfsense_zbx.php
 ```
 
 Then install package "Zabbix Agent 5" on your pfSense Box
