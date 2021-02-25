@@ -1,6 +1,106 @@
-[![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/rbicelli)
+# pfSense Zabbix Agent + Proxy
 
-# pfSense Zabbix Template
+## Configuration
+
+### Install PHP script for Agent
+
+- Option 1: via Web GUI **Diagnostics/Command Prompt**
+
+```bash
+mkdir /root/scripts && curl -o /root/scripts/pfsense_zbx.php https://raw.githubusercontent.com/Futur-Tech/futur-tech-pfsense-zabbix/master/pfsense_zbx.php
+```
+
+- Option 2 : via pfSense shell
+
+```bash
+mkdir /root/scripts
+curl -o /root/scripts/pfsense_zbx.php https://raw.githubusercontent.com/Futur-Tech/futur-tech-pfsense-zabbix/master/pfsense_zbx.php
+```
+
+### Zabbix Package Install
+
+From the package manager install package "Zabbix Agent 5" and "Zabbix Proxy 5"
+
+### Setup Zabbix Proxy
+
+Make sure to fill the following fields:
+
+```
+TLS Connect: psk
+TLS Accept: psk
+TLS PSK Identity: <hostname-of-the-pfsense>
+TLS PSK: <random-key>
+```
+To generate a PSK key you can use the command in Linux: 
+    
+    openssl rand -hex 32
+
+Click on **Show Advanced Options**
+
+In Advanced Features-> User Parameters
+
+    EnableRemoteCommands=1
+
+### Setup Zabbix Agent
+
+Make sure to fill the following fields:
+
+```
+Timeout: 10
+TLS Connect: psk
+TLS Accept: psk
+TLS PSK Identity: <auto-registration-identity>
+TLS PSK: <auto-registration-key>
+```
+Click on **Show Advanced Options**
+
+In Advanced Features-> User Parameters
+
+```bash
+AllowRoot=1
+HostMetadataItem=system.uname
+UserParameter=pfsense.states.max,grep "limit states" /tmp/rules.limits | cut -f4 -d ' '
+UserParameter=pfsense.states.current,grep "current entries" /tmp/pfctl_si_out | tr -s ' ' | cut -f4 -d ' '
+UserParameter=pfsense.mbuf.current,netstat -m | grep "mbuf clusters" | cut -f1 -d ' ' | cut -d '/' -f1
+UserParameter=pfsense.mbuf.cache,netstat -m | grep "mbuf clusters" | cut -f1 -d ' ' | cut -d '/' -f2
+UserParameter=pfsense.mbuf.max,netstat -m | grep "mbuf clusters" | cut -f1 -d ' ' | cut -d '/' -f4
+UserParameter=pfsense.discovery[*],/usr/local/bin/php /root/scripts/pfsense_zbx.php discovery $1
+UserParameter=pfsense.value[*],/usr/local/bin/php /root/scripts/pfsense_zbx.php $1 $2 $3
+```
+
+### Zabbix Server Install Note
+
+- Add the proxy in: **Administration** -> **Proxies** (don't forget to put the correct PSK).
+- Create a new host-group for the proxy **Configuration** -> **Host groups**
+- Create a new "Autoregistration actions" **Configuration** -> **Action** -- in the top left select **Autoregistration actions**
+- Create a new "Discovery rules" **Configuration** -> **Discovery**
+
+The new host should automatically register in Zabbix with all templates correctly assigned.
+
+The Host Name will be the hostname of the Pfsense.
+
+* Modify the visible name
+* Correct the Agent interface if it is incorrect
+* Under the tab **Encryption** put the same PSK ID and Key as the proxy *(it doesn't need to be the same as the proxy BUT make sure to not use 2 keys on separate host/proxy with the same identity).*
+* **Update the PSK ID and Key in the Pfsense Zabbix Agent!**
+
+## Note on the script and template
+
+_Please note that **AllowRoot=1** option is required in order to execute correctly OpenVPN checks and others._
+
+Also increase the **Timeout** value at least to **5**, otherwise some checks will fail.
+
+Then import xml templates in Zabbix and add your pfSense hosts.
+
+If you are running a redundant CARP setup you should adjust the macro {$EXPECTED_CARP_STATUS} to a value representing what is CARP expected status on monitored box.
+
+Possible values are:
+
+ - 0: Disabled
+ - 1: Master
+ - 2: Backup
+
+This is useful when monitoring services which could stay stopped on CARP Backup Member.
 
 This is a pfSense active template for Zabbix, based on Standard Agent and a php script using pfSense functions library for monitoring specific data.
 
@@ -29,57 +129,10 @@ Tested with pfSense 2.4.x, Zabbix 4.0, Zabbix 5.0
  - Discovery of IPsec Site-to-Site tunnels
  - Monitoring tunnel status (Phase 1 and Phase 2)
 
-
-## Configuration
-
-First copy the file pfsense_zbx.php to your pfsense box (e.g. to /root/scripts).
-
-For example, from pfSense shell:
-
-```bash
-mkdir /root/scripts
-curl -o /root/scripts/pfsense_zbx.php https://raw.githubusercontent.com/Futur-Tech/futur-tech-pfsense-zabbix/master/pfsense_zbx.php
-```
-
-or, from **Diagnostics/Command Prompt** input this one-liner:
-
-```bash
-mkdir /root/scripts && curl -o /root/scripts/pfsense_zbx.php https://raw.githubusercontent.com/Futur-Tech/futur-tech-pfsense-zabbix/master/pfsense_zbx.php
-```
-
-Then install package "Zabbix Agent 5" on your pfSense Box
-
-
-In Advanced Features-> User Parameters
-
-```bash
-AllowRoot=1
-HostMetadataItem=system.uname
-UserParameter=pfsense.states.max,grep "limit states" /tmp/rules.limits | cut -f4 -d ' '
-UserParameter=pfsense.states.current,grep "current entries" /tmp/pfctl_si_out | tr -s ' ' | cut -f4 -d ' '
-UserParameter=pfsense.mbuf.current,netstat -m | grep "mbuf clusters" | cut -f1 -d ' ' | cut -d '/' -f1
-UserParameter=pfsense.mbuf.cache,netstat -m | grep "mbuf clusters" | cut -f1 -d ' ' | cut -d '/' -f2
-UserParameter=pfsense.mbuf.max,netstat -m | grep "mbuf clusters" | cut -f1 -d ' ' | cut -d '/' -f4
-UserParameter=pfsense.discovery[*],/usr/local/bin/php /root/scripts/pfsense_zbx.php discovery $1
-UserParameter=pfsense.value[*],/usr/local/bin/php /root/scripts/pfsense_zbx.php $1 $2 $3
-```
-
-_Please note that **AllowRoot=1** option is required in order to execute correctly OpenVPN checks and others._
-
-Also increase the **Timeout** value at least to **5**, otherwise some checks will fail.
-
-Then import xml templates in Zabbix and add your pfSense hosts.
-
-If you are running a redundant CARP setup you should adjust the macro {$EXPECTED_CARP_STATUS} to a value representing what is CARP expected status on monitored box.
-
-Possible values are:
-
- - 0: Disabled
- - 1: Master
- - 2: Backup
-
-This is useful when monitoring services which could stay stopped on CARP Backup Member.
-
 ## Credits
+
+Original GIT: https://github.com/rbicelli/pfsense-zabbix-template
+
+[![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/rbicelli)
 
 [Keenton Zabbix Template](https://github.com/keentonsas/zabbix-template-pfsense) for Zabbix Agent freeBSD part.
