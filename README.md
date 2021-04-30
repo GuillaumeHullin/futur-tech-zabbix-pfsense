@@ -7,15 +7,17 @@
 - Option 1: via Web GUI **Diagnostics/Command Prompt**
 
 ```bash
-mkdir /root/scripts && curl -o /root/scripts/pfsense_zbx.php https://raw.githubusercontent.com/Futur-Tech/futur-tech-pfsense-zabbix/master/pfsense_zbx.php
+[ -d "/root/scripts" ] || curl -o /root/scripts/pfsense_zbx.php https://raw.githubusercontent.com/Futur-Tech/futur-tech-pfsense-zabbix/main/pfsense_zbx.php 
 ```
+> You can add this command to **Services** > **Shellcmd** in order to download the latest version of the script, each time you reboot or restore a config backup.
 
 - Option 2 : via pfSense shell
 
 ```bash
 mkdir /root/scripts
-curl -o /root/scripts/pfsense_zbx.php https://raw.githubusercontent.com/Futur-Tech/futur-tech-pfsense-zabbix/master/pfsense_zbx.php
+curl -o /root/scripts/pfsense_zbx.php https://raw.githubusercontent.com/Futur-Tech/futur-tech-pfsense-zabbix/main/pfsense_zbx.php 
 ```
+
 
 ### Zabbix Package Install
 
@@ -33,13 +35,17 @@ TLS PSK: <random-key>
 ```
 To generate a PSK key you can use the command in Linux: 
     
-    openssl rand -hex 32
+```bash
+openssl rand -hex 32
+```
 
 Click on **Show Advanced Options**
 
 In Advanced Features-> User Parameters
 
-    EnableRemoteCommands=1
+```
+EnableRemoteCommands=1
+```
 
 ### Setup Zabbix Agent
 
@@ -57,6 +63,7 @@ Click on **Show Advanced Options**
 In Advanced Features-> User Parameters
 
 ```bash
+# https://github.com/Futur-Tech/futur-tech-zabbix-pfsense
 AllowRoot=1
 HostMetadataItem=system.uname
 UserParameter=pfsense.states.max,grep "limit states" /tmp/rules.limits | cut -f4 -d ' '
