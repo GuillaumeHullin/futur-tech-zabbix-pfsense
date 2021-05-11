@@ -7,7 +7,7 @@
 - Option 1: via Web GUI **Diagnostics/Command Prompt**
 
 ```bash
-[ -d "/root/scripts" ] || curl -o /root/scripts/pfsense_zbx.php https://raw.githubusercontent.com/Futur-Tech/futur-tech-pfsense-zabbix/main/pfsense_zbx.php 
+[ -d "/root/scripts" ] || mkdir /root/scripts ; curl -o /root/scripts/pfsense_zbx.php https://raw.githubusercontent.com/Futur-Tech/futur-tech-zabbix-pfsense/main/pfsense_zbx.php
 ```
 > You can add this command to **Services** > **Shellcmd** in order to download the latest version of the script, each time you reboot or restore a config backup.
 
@@ -15,7 +15,7 @@
 
 ```bash
 mkdir /root/scripts
-curl -o /root/scripts/pfsense_zbx.php https://raw.githubusercontent.com/Futur-Tech/futur-tech-pfsense-zabbix/main/pfsense_zbx.php 
+curl -o /root/scripts/pfsense_zbx.php https://raw.githubusercontent.com/Futur-Tech/futur-tech-zabbix-pfsense/main/pfsense_zbx.php 
 ```
 
 
