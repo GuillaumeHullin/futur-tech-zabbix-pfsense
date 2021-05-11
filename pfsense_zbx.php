@@ -425,8 +425,12 @@ function pfz_gw_value($gw, $valuekey) {
      $gws = return_gateways_status(true);
      if(array_key_exists($gw,$gws)) {
           $value = $gws[$gw][$valuekey];
-          if ($valuekey=="status")
-               $value = pfz_valuemap("gateway.status", $value);     
+          if ($valuekey=="status") { 
+               if ($gws[$gw]["substatus"]<>"none") 
+                    $value = $gws[$gw]["substatus"];
+
+               $value = pfz_valuemap("gateway.status", $value);
+          }     
           echo $value;         
      }
 }
