@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>5.0</version>
-    <date>2021-05-11T11:05:40Z</date>
+    <date>2021-05-11T12:32:38Z</date>
     <groups>
         <group>
             <name>Templates/Futur-Tech/Applications</name>
@@ -1294,7 +1294,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <trigger_prototypes>
                         <trigger_prototype>
                             <expression>{Template Futur-Tech App pfSense Active:pfsense.value[service_value,{#SERVICE},status].last()}=0 &#13;
-and {$PFSENSE_SERVICE_TRIGGER:&quot;{#SERVICE}&quot;}=0 and (&#13;
+and {$PFSENSE_SRV_IGNORE:&quot;{#SERVICE}&quot;}=0 and (&#13;
 &#13;
 ({Template Futur-Tech App pfSense Active:pfsense.value[service_value,{#SERVICE},run_on_carp_slave].last()}=1 and &#13;
 {Template Futur-Tech App pfSense Active:pfsense.value[carp_status].last()}=2)&#13;
@@ -1311,7 +1311,7 @@ or&#13;
                             <priority>HIGH</priority>
                             <description>Service is not running&#13;
 &#13;
-If you want to skip the trigger for this service, add the macro {$PFSENSE_SERVICE_TRIGGER:&quot;{#SERVICE}&quot;}=0</description>
+If you want to skip the trigger for this service, add the macro {$PFSENSE_SRV_IGNORE:&quot;{#SERVICE}&quot;}=1</description>
                         </trigger_prototype>
                     </trigger_prototypes>
                 </discovery_rule>
@@ -1456,9 +1456,14 @@ If you want to skip the trigger for this service, add the macro {$PFSENSE_SERVIC
                     <value>0</value>
                 </macro>
                 <macro>
-                    <macro>{$PFSENSE_SERVICE_TRIGGER:&quot;dnsbl&quot;}</macro>
-                    <value>0</value>
+                    <macro>{$PFSENSE_SRV_IGNORE:&quot;dnsbl&quot;}</macro>
+                    <value>1</value>
                     <description>Disable monitoring of Service pfBlockerNG DNSBL Web Server</description>
+                </macro>
+                <macro>
+                    <macro>{$PFSENSE_SRV_IGNORE:&quot;iperf&quot;}</macro>
+                    <value>1</value>
+                    <description>Disable monitoring of Service iperf Network Performance Testing Daemon/Client</description>
                 </macro>
             </macros>
             <screens>
