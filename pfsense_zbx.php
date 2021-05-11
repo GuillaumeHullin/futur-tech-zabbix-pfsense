@@ -1093,4 +1093,3 @@ switch (strtolower($argv[1])){
      default:
           pfz_test();
 }
-?>
