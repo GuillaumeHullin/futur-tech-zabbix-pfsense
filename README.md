@@ -34,9 +34,17 @@ For testing if speedtest is installed properly you can try it:
 /usr/local/bin/speedtest
 ```
 
+If you get an error while testing you can overide the Python script from the original version.
+
+```bash
+curl -Lo /usr/local/lib/python3.7/site-packages/speedtest.py https://raw.githubusercontent.com/Futur-Tech/speedtest-cli/master/speedtest.py
+```
+
+> Note that for pfSense 2.4, Python 3.7 is installed. In 2.5, it's Python 3.8... so adjust the path if needed.
+
 Remember that you will need to install the package on *every* pfSense upgrade, to avoid this inconvenience you can add the install command in **Schellcmd**.
 
-Speedtest template creates a cron job and check for entry everytime Zabbix requests its items. If you  want to uninstall the cron jobs simply run, from **Diagnostics/Command Prompt**:
+Speedtest template creates a cron job and check for entry everytime Zabbix requests its items. If you want to uninstall the cron jobs simply run, from **Diagnostics/Command Prompt**:
 
 ```bash
 /url/local/bin/php /root/scripts/pfsense_zbx.php cron_cleanup
