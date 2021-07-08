@@ -18,6 +18,29 @@ mkdir /root/scripts
 curl -o /root/scripts/pfsense_zbx.php https://raw.githubusercontent.com/Futur-Tech/futur-tech-zabbix-pfsense/main/pfsense_zbx.php 
 ```
 
+### Setup Speedtest
+
+For running speedtests on WAN interfaces you have to install the speedtest package.
+
+From **Diagnostics/Command Prompt** input this commands:
+
+```bash
+pkg update && pkg install -y  -g 'py*-speedtest-cli'
+```
+
+For testing if speedtest is installed properly you can try it:
+
+```bash
+/usr/local/bin/speedtest
+```
+
+Remember that you will need to install the package on *every* pfSense upgrade, to avoid this inconvenience you can add the install command in **Schellcmd**.
+
+Speedtest template creates a cron job and check for entry everytime Zabbix requests its items. If you  want to uninstall the cron jobs simply run, from **Diagnostics/Command Prompt**:
+
+```bash
+/url/local/bin/php /root/scripts/pfsense_zbx.php cron_cleanup
+```
 
 ### Zabbix Package Install
 
