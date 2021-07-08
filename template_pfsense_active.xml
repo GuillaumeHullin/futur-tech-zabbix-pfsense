@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>5.0</version>
-    <date>2021-07-08T10:40:07Z</date>
+    <date>2021-07-08T11:49:04Z</date>
     <groups>
         <group>
             <name>Templates/Futur-Tech/Applications</name>
@@ -17,6 +17,12 @@ Version 1.0.2&#13;
 https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
             <templates>
                 <template>
+                    <name>Template Futur-Tech App pfSense Active OpenVPN Server User Auth</name>
+                </template>
+                <template>
+                    <name>Template Futur-Tech App pfSense Active Speedtest</name>
+                </template>
+                <template>
                     <name>Template Futur-Tech Module Zabbix agent active</name>
                 </template>
             </templates>
@@ -27,9 +33,6 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
             </groups>
             <applications>
                 <application>
-                    <name>CARP</name>
-                </application>
-                <application>
                     <name>CPU</name>
                 </application>
                 <application>
@@ -39,10 +42,10 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Gateways</name>
                 </application>
                 <application>
-                    <name>Memory</name>
+                    <name>HA</name>
                 </application>
                 <application>
-                    <name>Network interfaces</name>
+                    <name>Memory</name>
                 </application>
                 <application>
                     <name>Network Limits</name>
@@ -129,7 +132,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <description>Expected CARP Status</description>
                     <applications>
                         <application>
-                            <name>CARP</name>
+                            <name>HA</name>
                         </application>
                     </applications>
                     <valuemap>
@@ -253,7 +256,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <description>pfSense CARP Status</description>
                     <applications>
                         <application>
-                            <name>CARP</name>
+                            <name>HA</name>
                         </application>
                     </applications>
                     <valuemap>
@@ -266,7 +269,26 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                             <priority>HIGH</priority>
                             <description>CARP Problems</description>
                         </trigger>
+                        <trigger>
+                            <expression>{last()}&gt;2</expression>
+                            <name>DHCP Failover Problems on {HOST.NAME}</name>
+                            <url>https://docs.netgate.com/pfsense/en/latest/troubleshooting/ha-dhcp-failover.html</url>
+                            <priority>HIGH</priority>
+                            <description>One or more DHCP Pools are experiencing failover problems. This could potentially cause other problems in yourr network.</description>
+                        </trigger>
                     </triggers>
+                </item>
+                <item>
+                    <name>DHCP Failover Pool Problems</name>
+                    <type>ZABBIX_ACTIVE</type>
+                    <key>pfsense.value[dhcp,failover]</key>
+                    <delay>120s</delay>
+                    <description>This value indicates, in a HA scenario, if DHCP failover pool partners are out of sync.</description>
+                    <applications>
+                        <application>
+                            <name>HA</name>
+                        </application>
+                    </applications>
                 </item>
                 <item>
                     <name>Gateway Status Raw</name>
@@ -330,6 +352,27 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                                     <expression>({Template Futur-Tech App pfSense Active:pfsense.value[system,version].last()}&lt;&gt;{Template Futur-Tech App pfSense Active:pfsense.value[system,installed_version].last()})=1</expression>
                                 </dependency>
                             </dependencies>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>Packages Needing Update</name>
+                    <type>ZABBIX_ACTIVE</type>
+                    <key>pfsense.value[system,packages_update]</key>
+                    <delay>1d</delay>
+                    <description>Number of packages needing update.</description>
+                    <applications>
+                        <application>
+                            <name>System</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{last()}&gt;0</expression>
+                            <name>Packages Update Available</name>
+                            <opdata>{ITEM.LASTVALUE}</opdata>
+                            <priority>INFO</priority>
+                            <description>New version of packages are available</description>
                         </trigger>
                     </triggers>
                 </item>
@@ -1046,11 +1089,26 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <description>Discovery of network interfaces as defined in global regular expression &quot;Network interfaces for discovery&quot;.</description>
                     <item_prototypes>
                         <item_prototype>
+                            <name>Incoming Errors on {#IFDESCR}</name>
+                            <type>ZABBIX_ACTIVE</type>
+                            <key>net.if.in[{#IFNAME},errors]</key>
+                            <applications>
+                                <application>
+                                    <name>Network interfaces</name>
+                                </application>
+                            </applications>
+                            <preprocessing>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <params/>
+                                </step>
+                            </preprocessing>
+                        </item_prototype>
+                        <item_prototype>
                             <name>Incoming network traffic on {#IFDESCR}</name>
                             <type>ZABBIX_ACTIVE</type>
                             <key>net.if.in[{#IFNAME}]</key>
                             <delay>2m</delay>
-                            <history>7d</history>
                             <units>bps</units>
                             <applications>
                                 <application>
@@ -1069,11 +1127,26 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                             </preprocessing>
                         </item_prototype>
                         <item_prototype>
+                            <name>Outgoing errors on {#IFDESCR}</name>
+                            <type>ZABBIX_ACTIVE</type>
+                            <key>net.if.out[{#IFNAME},errors]</key>
+                            <applications>
+                                <application>
+                                    <name>Network interfaces</name>
+                                </application>
+                            </applications>
+                            <preprocessing>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <params/>
+                                </step>
+                            </preprocessing>
+                        </item_prototype>
+                        <item_prototype>
                             <name>Outgoing network traffic on {#IFDESCR}</name>
                             <type>ZABBIX_ACTIVE</type>
                             <key>net.if.out[{#IFNAME}]</key>
                             <delay>2m</delay>
-                            <history>7d</history>
                             <units>bps</units>
                             <applications>
                                 <application>
@@ -1424,6 +1497,18 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                 </discovery_rule>
             </discovery_rules>
             <macros>
+                <macro>
+                    <macro>{$CARP_SERVICES_STOPPED}</macro>
+                    <value>^(haproxy|openvpn)$</value>
+                </macro>
+                <macro>
+                    <macro>{$CARP_SLAVE_SERVICES:&quot;haproxy&quot;}</macro>
+                    <value>0</value>
+                </macro>
+                <macro>
+                    <macro>{$CARP_SLAVE_SERVICES:&quot;openvpn&quot;}</macro>
+                    <value>0</value>
+                </macro>
                 <macro>
                     <macro>{$EXPECTED_CARP_STATUS}</macro>
                     <value>0</value>
