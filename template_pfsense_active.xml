@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>5.0</version>
-    <date>2021-05-11T12:32:38Z</date>
+    <date>2021-07-08T10:40:07Z</date>
     <groups>
         <group>
             <name>Templates/Futur-Tech/Applications</name>
@@ -71,8 +71,8 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Maximum number of opened files</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>kernel.maxfiles</key>
-                    <delay>3600</delay>
-                    <history>27d</history>
+                    <delay>1h</delay>
+                    <history>30d</history>
                     <description>It could be increased by using sysctrl utility or modifying file /etc/sysctl.conf.</description>
                     <applications>
                         <application>
@@ -82,7 +82,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <triggers>
                         <trigger>
                             <expression>{last(0)}&lt;1024</expression>
-                            <name>Configured max number of opened files is too low on {HOST.NAME}</name>
+                            <name>Configured max number of opened files is too low</name>
                             <priority>INFO</priority>
                         </trigger>
                     </triggers>
@@ -91,8 +91,8 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Maximum number of processes</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>kernel.maxproc</key>
-                    <delay>3600</delay>
-                    <history>27d</history>
+                    <delay>1h</delay>
+                    <history>30d</history>
                     <description>It could be increased by using sysctrl utility or modifying file /etc/sysctl.conf.</description>
                     <applications>
                         <application>
@@ -102,7 +102,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <triggers>
                         <trigger>
                             <expression>{last(0)}&lt;256</expression>
-                            <name>Configured max number of processes is too low on {HOST.NAME}</name>
+                            <name>Configured max number of processes is too low</name>
                             <priority>INFO</priority>
                         </trigger>
                     </triggers>
@@ -111,8 +111,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Used memory (calc)</name>
                     <type>CALCULATED</type>
                     <key>kt.mem.used</key>
-                    <delay>60</delay>
-                    <history>28d</history>
+                    <history>30d</history>
                     <units>B</units>
                     <params>last(vm.memory.size[total]) - last(vm.memory.size[available])</params>
                     <applications>
@@ -141,8 +140,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>MBUF Cache</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>pfsense.mbuf.cache</key>
-                    <delay>60</delay>
-                    <history>27d</history>
+                    <history>30d</history>
                     <applications>
                         <application>
                             <name>Network Limits</name>
@@ -153,8 +151,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>MBUF Current</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>pfsense.mbuf.current</key>
-                    <delay>60</delay>
-                    <history>27d</history>
+                    <history>30d</history>
                     <applications>
                         <application>
                             <name>Network Limits</name>
@@ -165,8 +162,8 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>MBUF Max</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>pfsense.mbuf.max</key>
-                    <delay>600</delay>
-                    <history>27d</history>
+                    <delay>10m</delay>
+                    <history>30d</history>
                     <applications>
                         <application>
                             <name>Network Limits</name>
@@ -177,8 +174,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>MBUF Total Used (percent)</name>
                     <type>CALCULATED</type>
                     <key>pfsense.mbuf.ptotal</key>
-                    <delay>60</delay>
-                    <history>28d</history>
+                    <history>30d</history>
                     <value_type>FLOAT</value_type>
                     <units>%</units>
                     <params>((last(pfsense.mbuf.current) + last(pfsense.mbuf.cache)) * 100) / last(pfsense.mbuf.max)</params>
@@ -204,8 +200,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>States Table Current</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>pfsense.states.current</key>
-                    <delay>60</delay>
-                    <history>27d</history>
+                    <history>30d</history>
                     <applications>
                         <application>
                             <name>Network Limits</name>
@@ -216,8 +211,8 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>States Table Max</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>pfsense.states.max</key>
-                    <delay>600</delay>
-                    <history>27d</history>
+                    <delay>10m</delay>
+                    <history>30d</history>
                     <applications>
                         <application>
                             <name>Network Limits</name>
@@ -228,8 +223,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>States Table Current (percent)</name>
                     <type>CALCULATED</type>
                     <key>pfsense.states.pused</key>
-                    <delay>60</delay>
-                    <history>28d</history>
+                    <history>30d</history>
                     <value_type>FLOAT</value_type>
                     <units>%</units>
                     <params>(last(pfsense.states.current) * 100) / last(pfsense.states.max)</params>
@@ -268,7 +262,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <triggers>
                         <trigger>
                             <expression>{last()}&gt;2</expression>
-                            <name>CARP  Problems on {HOST.NAME}</name>
+                            <name>CARP Problems</name>
                             <priority>HIGH</priority>
                             <description>CARP Problems</description>
                         </trigger>
@@ -278,7 +272,6 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Gateway Status Raw</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>pfsense.value[gw_status]</key>
-                    <delay>60s</delay>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <description>Gateway Status Raw</description>
@@ -292,7 +285,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                             <expression>{diff()}&gt;0</expression>
                             <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
                             <recovery_expression>{diff()}=0</recovery_expression>
-                            <name>pfSense Gateway Status Changed on {HOST.NAME}</name>
+                            <name>pfSense Gateway Status Changed</name>
                             <priority>AVERAGE</priority>
                             <description>Gateway Status Change, for use with an acion Script (e.g. update DNS record)</description>
                             <manual_close>YES</manual_close>
@@ -328,10 +321,15 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <triggers>
                         <trigger>
                             <expression>{last()}=1</expression>
-                            <name>New Version of pfSense Available on {HOST.NAME}</name>
+                            <name>New Version of pfSense Available</name>
                             <priority>INFO</priority>
                             <description>A new version of pfSense is available for update.</description>
-                            <manual_close>YES</manual_close>
+                            <dependencies>
+                                <dependency>
+                                    <name>New Version of pfSense {ITEM.LASTVALUE} Available</name>
+                                    <expression>({Template Futur-Tech App pfSense Active:pfsense.value[system,version].last()}&lt;&gt;{Template Futur-Tech App pfSense Active:pfsense.value[system,installed_version].last()})=1</expression>
+                                </dependency>
+                            </dependencies>
                         </trigger>
                     </triggers>
                 </item>
@@ -352,8 +350,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Number of running processes</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>proc.num[,,run]</key>
-                    <delay>60</delay>
-                    <history>27d</history>
+                    <history>30d</history>
                     <description>Number of processes in running state.</description>
                     <applications>
                         <application>
@@ -363,7 +360,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <triggers>
                         <trigger>
                             <expression>{avg(5m)}&gt;30</expression>
-                            <name>Too many processes running on {HOST.NAME}</name>
+                            <name>Too many processes running</name>
                             <priority>WARNING</priority>
                         </trigger>
                     </triggers>
@@ -372,8 +369,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Number of processes</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>proc.num[]</key>
-                    <delay>60</delay>
-                    <history>27d</history>
+                    <history>30d</history>
                     <description>Total number of processes in any state.</description>
                     <applications>
                         <application>
@@ -383,7 +379,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <triggers>
                         <trigger>
                             <expression>{avg(5m)}&gt;300</expression>
-                            <name>Too many processes on {HOST.NAME}</name>
+                            <name>Too many processes</name>
                             <priority>WARNING</priority>
                         </trigger>
                     </triggers>
@@ -392,8 +388,8 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Host boot time</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>system.boottime</key>
-                    <delay>600</delay>
-                    <history>27d</history>
+                    <delay>10m</delay>
+                    <history>30d</history>
                     <units>unixtime</units>
                     <applications>
                         <application>
@@ -405,8 +401,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Interrupts per second</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>system.cpu.intr</key>
-                    <delay>60</delay>
-                    <history>27d</history>
+                    <history>30d</history>
                     <units>ips</units>
                     <applications>
                         <application>
@@ -424,8 +419,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Processor load (1min/core)</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>system.cpu.load[percpu,avg1]</key>
-                    <delay>60</delay>
-                    <history>27d</history>
+                    <history>30d</history>
                     <value_type>FLOAT</value_type>
                     <description>The processor load is calculated as system CPU load divided by number of CPU cores.</description>
                     <applications>
@@ -436,7 +430,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <triggers>
                         <trigger>
                             <expression>{avg(5m)}&gt;5</expression>
-                            <name>Processor load is too high on {HOST.NAME}</name>
+                            <name>Processor load is too high</name>
                             <priority>WARNING</priority>
                         </trigger>
                     </triggers>
@@ -445,8 +439,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Processor load (5min/core)</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>system.cpu.load[percpu,avg5]</key>
-                    <delay>60</delay>
-                    <history>27d</history>
+                    <history>30d</history>
                     <value_type>FLOAT</value_type>
                     <description>The processor load is calculated as system CPU load divided by number of CPU cores.</description>
                     <applications>
@@ -459,8 +452,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Processor load (15min/core)</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>system.cpu.load[percpu,avg15]</key>
-                    <delay>60</delay>
-                    <history>27d</history>
+                    <history>30d</history>
                     <value_type>FLOAT</value_type>
                     <description>The processor load is calculated as system CPU load divided by number of CPU cores.</description>
                     <applications>
@@ -473,8 +465,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Context switches per second</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>system.cpu.switches</key>
-                    <delay>60</delay>
-                    <history>27d</history>
+                    <history>30d</history>
                     <units>sps</units>
                     <applications>
                         <application>
@@ -492,8 +483,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>CPU $2 time</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>system.cpu.util[,idle]</key>
-                    <delay>60</delay>
-                    <history>27d</history>
+                    <history>30d</history>
                     <value_type>FLOAT</value_type>
                     <units>%</units>
                     <description>The time the CPU has spent doing nothing.</description>
@@ -507,8 +497,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>CPU $2 time</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>system.cpu.util[,interrupt]</key>
-                    <delay>60</delay>
-                    <history>27d</history>
+                    <history>30d</history>
                     <value_type>FLOAT</value_type>
                     <units>%</units>
                     <description>The amount of time the CPU has been servicing hardware interrupts.</description>
@@ -522,8 +511,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>CPU $2 time</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>system.cpu.util[,nice]</key>
-                    <delay>60</delay>
-                    <history>27d</history>
+                    <history>30d</history>
                     <value_type>FLOAT</value_type>
                     <units>%</units>
                     <description>The time the CPU has spent running users' processes that have been niced.</description>
@@ -537,8 +525,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>CPU $2 time</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>system.cpu.util[,system]</key>
-                    <delay>60</delay>
-                    <history>27d</history>
+                    <history>30d</history>
                     <value_type>FLOAT</value_type>
                     <units>%</units>
                     <description>The time the CPU has spent running the kernel and its processes.</description>
@@ -552,8 +539,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>CPU $2 time</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>system.cpu.util[,user]</key>
-                    <delay>60</delay>
-                    <history>27d</history>
+                    <history>30d</history>
                     <value_type>FLOAT</value_type>
                     <units>%</units>
                     <description>The time the CPU has spent running users' processes that are not niced.</description>
@@ -567,8 +553,8 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Host name</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>system.hostname</key>
-                    <delay>3600</delay>
-                    <history>27d</history>
+                    <delay>1h</delay>
+                    <history>30d</history>
                     <trends>0</trends>
                     <value_type>CHAR</value_type>
                     <description>System host name.</description>
@@ -581,7 +567,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <triggers>
                         <trigger>
                             <expression>{diff(0)}&gt;0</expression>
-                            <name>Hostname was changed on {HOST.NAME}</name>
+                            <name>Hostname was changed</name>
                             <priority>INFO</priority>
                         </trigger>
                     </triggers>
@@ -590,8 +576,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Host local time</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>system.localtime</key>
-                    <delay>60</delay>
-                    <history>27d</history>
+                    <history>30d</history>
                     <units>unixtime</units>
                     <applications>
                         <application>
@@ -603,8 +588,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Free swap space</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>system.swap.size[,free]</key>
-                    <delay>60</delay>
-                    <history>27d</history>
+                    <history>30d</history>
                     <units>B</units>
                     <applications>
                         <application>
@@ -616,8 +600,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Free swap space in %</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>system.swap.size[,pfree]</key>
-                    <delay>60</delay>
-                    <history>27d</history>
+                    <history>30d</history>
                     <value_type>FLOAT</value_type>
                     <units>%</units>
                     <applications>
@@ -628,7 +611,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <triggers>
                         <trigger>
                             <expression>{last(0)}&lt;50</expression>
-                            <name>Lack of free swap space on {HOST.NAME}</name>
+                            <name>Lack of free swap space</name>
                             <priority>WARNING</priority>
                             <description>It probably means that the systems requires more physical memory.</description>
                         </trigger>
@@ -638,8 +621,8 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Total swap space</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>system.swap.size[,total]</key>
-                    <delay>3600</delay>
-                    <history>27d</history>
+                    <delay>1h</delay>
+                    <history>30d</history>
                     <units>B</units>
                     <applications>
                         <application>
@@ -651,8 +634,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Used swap space</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>system.swap.size[,used]</key>
-                    <delay>60</delay>
-                    <history>27d</history>
+                    <history>30d</history>
                     <units>B</units>
                     <applications>
                         <application>
@@ -664,8 +646,8 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>System information</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>system.uname</key>
-                    <delay>3600</delay>
-                    <history>27d</history>
+                    <delay>1h</delay>
+                    <history>30d</history>
                     <trends>0</trends>
                     <value_type>CHAR</value_type>
                     <description>The information as normally returned by 'uname -a'.</description>
@@ -678,7 +660,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <triggers>
                         <trigger>
                             <expression>{diff(0)}&gt;0</expression>
-                            <name>Host information was changed on {HOST.NAME}</name>
+                            <name>Host information was changed</name>
                             <priority>INFO</priority>
                         </trigger>
                     </triggers>
@@ -687,8 +669,8 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>System uptime</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>system.uptime</key>
-                    <delay>600</delay>
-                    <history>27d</history>
+                    <delay>10m</delay>
+                    <history>30d</history>
                     <units>uptime</units>
                     <applications>
                         <application>
@@ -698,7 +680,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <triggers>
                         <trigger>
                             <expression>{change(0)}&lt;0</expression>
-                            <name>{HOST.NAME} has just been restarted</name>
+                            <name>Host has just been restarted</name>
                             <priority>INFO</priority>
                         </trigger>
                     </triggers>
@@ -707,8 +689,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Number of logged in users</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>system.users.num</key>
-                    <delay>60</delay>
-                    <history>27d</history>
+                    <history>30d</history>
                     <description>Number of users who are currently logged in.</description>
                     <applications>
                         <application>
@@ -720,8 +701,8 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Checksum of $1</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>vfs.file.cksum[/etc/passwd]</key>
-                    <delay>3600</delay>
-                    <history>27d</history>
+                    <delay>1h</delay>
+                    <history>30d</history>
                     <applications>
                         <application>
                             <name>OS</name>
@@ -730,7 +711,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <triggers>
                         <trigger>
                             <expression>{diff(0)}&gt;0</expression>
-                            <name>/etc/passwd has been changed on {HOST.NAME}</name>
+                            <name>/etc/passwd has been changed</name>
                             <priority>WARNING</priority>
                         </trigger>
                     </triggers>
@@ -739,8 +720,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Active memory</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>vm.memory.size[active]</key>
-                    <delay>60</delay>
-                    <history>28d</history>
+                    <history>30d</history>
                     <units>B</units>
                     <description>quantité de mémoire en cours d'utilisation par les processus</description>
                     <applications>
@@ -753,8 +733,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Available memory</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>vm.memory.size[available]</key>
-                    <delay>60</delay>
-                    <history>27d</history>
+                    <history>30d</history>
                     <units>B</units>
                     <description>Available memory is defined as free+cached+buffers memory.</description>
                     <applications>
@@ -765,7 +744,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <triggers>
                         <trigger>
                             <expression>{last(0)}&lt;20M</expression>
-                            <name>Lack of available memory on server {HOST.NAME}</name>
+                            <name>Lack of available memory</name>
                             <priority>AVERAGE</priority>
                         </trigger>
                     </triggers>
@@ -774,8 +753,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Buffered memory</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>vm.memory.size[buffers]</key>
-                    <delay>60</delay>
-                    <history>28d</history>
+                    <history>30d</history>
                     <units>B</units>
                     <description>Cache d'entrées des IO disque.&#13;
 &#13;
@@ -790,8 +768,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Cached memory</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>vm.memory.size[cached]</key>
-                    <delay>60</delay>
-                    <history>28d</history>
+                    <history>30d</history>
                     <units>B</units>
                     <description>quantité de mémoire utilisée pour mettre des données en cache</description>
                     <applications>
@@ -804,8 +781,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Free memory</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>vm.memory.size[free]</key>
-                    <delay>60</delay>
-                    <history>28d</history>
+                    <history>30d</history>
                     <units>B</units>
                     <description>quantité de mémoire complètement libre et prête a être utilisée directement.</description>
                     <applications>
@@ -818,8 +794,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Inactive memory</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>vm.memory.size[inactive]</key>
-                    <delay>60</delay>
-                    <history>28d</history>
+                    <history>30d</history>
                     <units>B</units>
                     <description>quantité de mémoire qui contient des données qui ne sont plus utilisées (peut être directement libéré si besoin)</description>
                     <applications>
@@ -832,8 +807,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Available memory (percent)</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>vm.memory.size[pavailable]</key>
-                    <delay>60</delay>
-                    <history>28d</history>
+                    <history>30d</history>
                     <value_type>FLOAT</value_type>
                     <units>%</units>
                     <description>Available memory is defined as free+cached+buffers memory.</description>
@@ -853,8 +827,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Shared memory</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>vm.memory.size[shared]</key>
-                    <delay>60</delay>
-                    <history>28d</history>
+                    <history>30d</history>
                     <units>B</units>
                     <description>quantité de mémoire partagée entre plusieurs processus&#13;
 &#13;
@@ -869,8 +842,8 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Total memory</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>vm.memory.size[total]</key>
-                    <delay>3600</delay>
-                    <history>27d</history>
+                    <delay>1h</delay>
+                    <history>30d</history>
                     <units>B</units>
                     <description>quantité de mémoire totale</description>
                     <applications>
@@ -883,8 +856,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Used memory</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>vm.memory.size[used]</key>
-                    <delay>60</delay>
-                    <history>28d</history>
+                    <history>30d</history>
                     <units>B</units>
                     <description>Item désactivé car non utilisé</description>
                     <applications>
@@ -897,8 +869,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <name>Wired memory</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>vm.memory.size[wired]</key>
-                    <delay>60</delay>
-                    <history>28d</history>
+                    <history>30d</history>
                     <units>B</units>
                     <description>quantité de mémoire utilisée par le kernel, ne peut être ni déchargée en swap, ni compressée.</description>
                     <applications>
@@ -1266,7 +1237,8 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <delay>2m</delay>
                     <item_prototypes>
                         <item_prototype>
-                            <name>Service {#DESCRIPTION}  enabled on CARP Slave</name>
+                            <name>Service {#DESCRIPTION} enabled on CARP Slave</name>
+                            <type>ZABBIX_ACTIVE</type>
                             <key>pfsense.value[service_value,{#SERVICE},run_on_carp_slave]</key>
                             <delay>10m</delay>
                             <applications>
@@ -1280,6 +1252,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                         </item_prototype>
                         <item_prototype>
                             <name>Service {#DESCRIPTION} Status</name>
+                            <type>ZABBIX_ACTIVE</type>
                             <key>pfsense.value[service_value,{#SERVICE},status]</key>
                             <applications>
                                 <application>
@@ -1294,7 +1267,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     <trigger_prototypes>
                         <trigger_prototype>
                             <expression>{Template Futur-Tech App pfSense Active:pfsense.value[service_value,{#SERVICE},status].last()}=0 &#13;
-and {$PFSENSE_SRV_IGNORE:&quot;{#SERVICE}&quot;}=0 and (&#13;
+and {$PFSENSE_SRVC_MONITORING:&quot;{#SERVICE}&quot;}=1 and (&#13;
 &#13;
 ({Template Futur-Tech App pfSense Active:pfsense.value[service_value,{#SERVICE},run_on_carp_slave].last()}=1 and &#13;
 {Template Futur-Tech App pfSense Active:pfsense.value[carp_status].last()}=2)&#13;
@@ -1311,7 +1284,7 @@ or&#13;
                             <priority>HIGH</priority>
                             <description>Service is not running&#13;
 &#13;
-If you want to skip the trigger for this service, add the macro {$PFSENSE_SRV_IGNORE:&quot;{#SERVICE}&quot;}=1</description>
+If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MONITORING:&quot;{#SERVICE}&quot;=0</description>
                         </trigger_prototype>
                     </trigger_prototypes>
                 </discovery_rule>
@@ -1456,13 +1429,18 @@ If you want to skip the trigger for this service, add the macro {$PFSENSE_SRV_IG
                     <value>0</value>
                 </macro>
                 <macro>
-                    <macro>{$PFSENSE_SRV_IGNORE:&quot;dnsbl&quot;}</macro>
+                    <macro>{$PFSENSE_SRVC_MONITORING}</macro>
                     <value>1</value>
+                    <description>Enable monitoring of Services</description>
+                </macro>
+                <macro>
+                    <macro>{$PFSENSE_SRVC_MONITORING:&quot;dnsbl&quot;}</macro>
+                    <value>0</value>
                     <description>Disable monitoring of Service pfBlockerNG DNSBL Web Server</description>
                 </macro>
                 <macro>
-                    <macro>{$PFSENSE_SRV_IGNORE:&quot;iperf&quot;}</macro>
-                    <value>1</value>
+                    <macro>{$PFSENSE_SRVC_MONITORING:&quot;iperf&quot;}</macro>
+                    <value>0</value>
                     <description>Disable monitoring of Service iperf Network Performance Testing Daemon/Client</description>
                 </macro>
             </macros>
@@ -1568,13 +1546,14 @@ If you want to skip the trigger for this service, add the macro {$PFSENSE_SRV_IG
     <triggers>
         <trigger>
             <expression>{Template Futur-Tech App pfSense Active:pfsense.expected_carp_status.last()}&lt;&gt;0 and {Template Futur-Tech App pfSense Active:pfsense.value[carp_status].last()}&lt;&gt;{$EXPECTED_CARP_STATUS}</expression>
-            <name>CARP Status not Expected on {HOST.NAME}</name>
+            <name>CARP Status not Expected</name>
             <priority>HIGH</priority>
             <description>pfSense CARP is not in the state Expected. This means that a failover could be in process.</description>
         </trigger>
         <trigger>
             <expression>({Template Futur-Tech App pfSense Active:pfsense.value[system,version].last()}&lt;&gt;{Template Futur-Tech App pfSense Active:pfsense.value[system,installed_version].last()})=1</expression>
-            <name>New Version Available on {HOST.NAME}</name>
+            <name>New Version of pfSense {ITEM.LASTVALUE} Available</name>
+            <opdata>Current: {ITEM.LASTVALUE2}</opdata>
             <priority>INFO</priority>
             <description>Noify of new version of pfsense available</description>
         </trigger>
