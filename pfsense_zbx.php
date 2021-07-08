@@ -166,15 +166,15 @@ function pfz_interface_speedtest_value($ifname, $value){
 
 
 function pfz_speedtest_cron(){
-	require_once("services.inc");
-	$ifdescrs = get_configured_interface_with_descr(true);
-    $ifaces = get_interface_arr();
-    $pf_interface_name='';
-    $subvalue=false;    
+     require_once("services.inc");
+     $ifdescrs = get_configured_interface_with_descr(true);
+     $ifaces = get_interface_arr();
+     $pf_interface_name='';
+     $subvalue=false;    
 		                       
-    $ifcs = pfz_interface_discovery(true, true);    
+     $ifcs = pfz_interface_discovery(true, true);    
     
-    foreach ($ifcs as $ifname) {    	  
+     foreach ($ifcs as $ifname) {    	  
           
           foreach ($ifdescrs as $ifn => $ifd){
 		      $ifinfo = get_interface_info($ifn);
@@ -1167,9 +1167,9 @@ switch (strtolower($argv[1])){
           pfz_gw_rawstatus();
           break;
 	 case "if_speedtest_value":
-	      pfz_speedtest_cron_install();
-	 	  pfz_interface_speedtest_value($argv[2],$argv[3]);
-	 	  break;
+	     pfz_speedtest_cron_install();
+	 	pfz_interface_speedtest_value($argv[2],$argv[3]);
+	 	break;
      case "openvpn_servervalue":
           pfz_openvpn_servervalue($argv[2],$argv[3]);
           break;
