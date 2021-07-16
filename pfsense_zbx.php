@@ -202,7 +202,7 @@ function pfz_speedtest_cron_install($enable=true){
 function pfz_speedtest_exec ($ifname, $ipaddr){
 	
 	// Sleep random delay in order to avoid problem when 2 pfSense on the same Internet line
-	sleep (rand ( 1, 120));
+	sleep (rand ( 1, 60));
 
 	$filename = "/tmp/speedtest-$ifname";
 	$filetemp = "$filename.tmp";
