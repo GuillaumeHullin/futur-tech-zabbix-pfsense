@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>5.0</version>
-    <date>2021-07-08T10:44:18Z</date>
+    <date>2021-07-16T08:39:12Z</date>
     <groups>
         <group>
             <name>Templates/Futur-Tech/Applications</name>
@@ -9,13 +9,13 @@
     </groups>
     <templates>
         <template>
-            <template>Template Futur-Tech App pfSense Active OpenVPN Server User Auth</template>
+            <template>Template pfSense Active OpenVPN Server User Auth</template>
             <name>Template Futur-Tech App pfSense Active OpenVPN Server User Auth</name>
             <description>Extension for pfSense Active Template.&#13;
 Monitor client Connections of OpenVPN Server.&#13;
 &#13;
 Requires pfsense_zbx.php installed to pfSense Box.&#13;
-Version 1.0.2&#13;
+Version 1.0.5&#13;
 &#13;
 https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
             <groups>
