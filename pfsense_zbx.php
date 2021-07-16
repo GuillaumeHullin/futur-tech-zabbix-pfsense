@@ -111,18 +111,20 @@ function pfz_interface_discovery($is_wan=false,$is_cron=false) {
         
         $ifdescr = $hwif;
         $has_gw = false;
+        $has_public_ip=false;
         $is_vpn = false;
         
         foreach($ifcs as $ifc=>$ifinfo){
                 if ($ifinfo["hwif"] == $hwif){
                         $ifdescr = $ifinfo["description"];
                         if (array_key_exists("gateway",$ifinfo)) $has_gw=true;
+						if (filter_var($ifinfo["ipaddr"], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) $has_public_ip=true; //	https://stackoverflow.com/a/13818647/15093007					
                         if (strpos($ifinfo["if"],"ovpn")!==false) $is_vpn=true;
                         break;
                 }
         }
 		
-		if ( ($is_wan==false) ||  (($is_wan==true) && ($has_gw==true) && ($is_vpn==false)) ) { 
+		if ( ($is_wan==false) ||  (($is_wan==true) && (($has_gw==true) || ($has_public_ip==true)) && ($is_vpn==false)) ) { 
 		    $if_ret[]=$hwif;
 		    $json_string .= '{"{#IFNAME}":"' . $hwif . '"';
 		    $json_string .= ',"{#IFDESCR}":"' . $ifdescr . '"';
@@ -173,7 +175,7 @@ function pfz_speedtest_cron(){
     $subvalue=false;    
 		                       
     $ifcs = pfz_interface_discovery(true, true);    
-    
+
     foreach ($ifcs as $ifname) {    	  
           
           foreach ($ifdescrs as $ifn => $ifd){
