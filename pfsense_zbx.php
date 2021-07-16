@@ -178,19 +178,15 @@ function pfz_speedtest_cron(){
 
     foreach ($ifcs as $ifname) {    	  
           
-          foreach ($ifdescrs as $ifn => $ifd){
-		      $ifinfo = get_interface_info($ifn);
-		      if($ifinfo['hwif']==$ifname) {
-		      	$pf_interface_name = $ifn;
+        foreach ($ifdescrs as $ifn => $ifd){
+		    $ifinfo = get_interface_info($ifn);
+		    if($ifinfo['hwif']==$ifname) {
+		     	$pf_interface_name = $ifn;
 		      	break;
-		      }
-    	  }
-          
-          //If the interface has a gateway is considered WAN, so let's do the speedtest
-          if (array_key_exists("gateway", $ifinfo)) {				
-		  	$ipaddr = $ifinfo['ipaddr'];		
-			pfz_speedtest_exec($ifname, $ipaddr);		
-		  }
+			}
+    	}
+
+		pfz_speedtest_exec($ifname, $ifinfo['ipaddr']);		
 				          	
     }
 }
