@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>5.0</version>
-    <date>2021-07-08T11:49:04Z</date>
+    <date>2021-07-16T08:34:00Z</date>
     <groups>
         <group>
             <name>Templates/Futur-Tech/Applications</name>
@@ -9,18 +9,18 @@
     </groups>
     <templates>
         <template>
-            <template>Template Futur-Tech App pfSense Active</template>
+            <template>Template pfSense Active</template>
             <name>Template Futur-Tech App pfSense Active</name>
             <description>Active template for pfsense, requires pfsense_zbx.php installed to pfSense Box.&#13;
-Version 1.0.2&#13;
+Version 1.0.5&#13;
 &#13;
 https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
             <templates>
                 <template>
-                    <name>Template Futur-Tech App pfSense Active OpenVPN Server User Auth</name>
+                    <name>Template App pfSense Active OpenVPN Server User Auth</name>
                 </template>
                 <template>
-                    <name>Template Futur-Tech App pfSense Active Speedtest</name>
+                    <name>Template App pfSense Active Speedtest</name>
                 </template>
                 <template>
                     <name>Template Futur-Tech Module Zabbix agent active</name>
@@ -349,7 +349,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                             <dependencies>
                                 <dependency>
                                     <name>New Version of pfSense {ITEM.LASTVALUE} Available</name>
-                                    <expression>({Template Futur-Tech App pfSense Active:pfsense.value[system,version].last()}&lt;&gt;{Template Futur-Tech App pfSense Active:pfsense.value[system,installed_version].last()})=1</expression>
+                                    <expression>({Template pfSense Active:pfsense.value[system,version].last()}&lt;&gt;{Template pfSense Active:pfsense.value[system,installed_version].last()})=1</expression>
                                 </dependency>
                             </dependencies>
                         </trigger>
@@ -1038,7 +1038,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                                     <color>199C0D</color>
                                     <calc_fnc>ALL</calc_fnc>
                                     <item>
-                                        <host>Template Futur-Tech App pfSense Active</host>
+                                        <host>Template pfSense Active</host>
                                         <key>pfsense.value[gw_value,{#GATEWAY},delay]</key>
                                     </item>
                                 </graph_item>
@@ -1047,7 +1047,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                                     <color>FF5722</color>
                                     <calc_fnc>ALL</calc_fnc>
                                     <item>
-                                        <host>Template Futur-Tech App pfSense Active</host>
+                                        <host>Template pfSense Active</host>
                                         <key>pfsense.value[gw_value,{#GATEWAY},loss]</key>
                                     </item>
                                 </graph_item>
@@ -1063,7 +1063,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                                     <color>199C0D</color>
                                     <calc_fnc>ALL</calc_fnc>
                                     <item>
-                                        <host>Template Futur-Tech App pfSense Active</host>
+                                        <host>Template pfSense Active</host>
                                         <key>pfsense.value[gw_value,{#GATEWAY},status]</key>
                                     </item>
                                 </graph_item>
@@ -1176,7 +1176,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                                     <drawtype>GRADIENT_LINE</drawtype>
                                     <color>29E900</color>
                                     <item>
-                                        <host>Template Futur-Tech App pfSense Active</host>
+                                        <host>Template pfSense Active</host>
                                         <key>net.if.in[{#IFNAME}]</key>
                                     </item>
                                 </graph_item>
@@ -1185,7 +1185,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                                     <drawtype>GRADIENT_LINE</drawtype>
                                     <color>FD0000</color>
                                     <item>
-                                        <host>Template Futur-Tech App pfSense Active</host>
+                                        <host>Template pfSense Active</host>
                                         <key>net.if.out[{#IFNAME}]</key>
                                     </item>
                                 </graph_item>
@@ -1280,7 +1280,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     </item_prototypes>
                     <trigger_prototypes>
                         <trigger_prototype>
-                            <expression>{Template Futur-Tech App pfSense Active:pfsense.expected_carp_status.last()}&lt;&gt;2 and {Template Futur-Tech App pfSense Active:pfsense.value[openvpn_servervalue,{#SERVER},status].last()}=0</expression>
+                            <expression>{Template pfSense Active:pfsense.expected_carp_status.last()}&lt;&gt;2 and {Template pfSense Active:pfsense.value[openvpn_servervalue,{#SERVER},status].last()}=0</expression>
                             <name>OpenVPN Server {#NAME} is Down</name>
                             <priority>HIGH</priority>
                             <description>OpenVPN Tunnel is Down</description>
@@ -1295,7 +1295,7 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                                     <sortorder>1</sortorder>
                                     <color>0080FF</color>
                                     <item>
-                                        <host>Template Futur-Tech App pfSense Active</host>
+                                        <host>Template pfSense Active</host>
                                         <key>pfsense.value[openvpn_servervalue,{#SERVER},conns]</key>
                                     </item>
                                 </graph_item>
@@ -1339,19 +1339,19 @@ https://github.com/Futur-Tech/futur-tech-zabbix-pfsense</description>
                     </item_prototypes>
                     <trigger_prototypes>
                         <trigger_prototype>
-                            <expression>{Template Futur-Tech App pfSense Active:pfsense.value[service_value,{#SERVICE},status].last()}=0 &#13;
+                            <expression>{Template pfSense Active:pfsense.value[service_value,{#SERVICE},status].last()}=0 &#13;
 and {$PFSENSE_SRVC_MONITORING:&quot;{#SERVICE}&quot;}=1 and (&#13;
 &#13;
-({Template Futur-Tech App pfSense Active:pfsense.value[service_value,{#SERVICE},run_on_carp_slave].last()}=1 and &#13;
-{Template Futur-Tech App pfSense Active:pfsense.value[carp_status].last()}=2)&#13;
+({Template pfSense Active:pfsense.value[service_value,{#SERVICE},run_on_carp_slave].last()}=1 and &#13;
+{Template pfSense Active:pfsense.value[carp_status].last()}=2)&#13;
 &#13;
 or&#13;
 &#13;
-( {Template Futur-Tech App pfSense Active:pfsense.value[carp_status].last()}=1)&#13;
+( {Template pfSense Active:pfsense.value[carp_status].last()}=1)&#13;
 &#13;
 or&#13;
 &#13;
-({Template Futur-Tech App pfSense Active:pfsense.value[carp_status].last()}=0)&#13;
+({Template pfSense Active:pfsense.value[carp_status].last()}=0)&#13;
 )</expression>
                             <name>Service {#DESCRIPTION} is not running</name>
                             <priority>HIGH</priority>
@@ -1471,7 +1471,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                                     <color>CC0000</color>
                                     <type>GRAPH_SUM</type>
                                     <item>
-                                        <host>Template Futur-Tech App pfSense Active</host>
+                                        <host>Template pfSense Active</host>
                                         <key>vfs.fs.size[{#FSNAME},total]</key>
                                     </item>
                                 </graph_item>
@@ -1479,7 +1479,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                                     <sortorder>1</sortorder>
                                     <color>5B5B5B</color>
                                     <item>
-                                        <host>Template Futur-Tech App pfSense Active</host>
+                                        <host>Template pfSense Active</host>
                                         <key>vfs.fs.size[{#FSNAME},free]</key>
                                     </item>
                                 </graph_item>
@@ -1487,7 +1487,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                                     <sortorder>2</sortorder>
                                     <color>AEEE00</color>
                                     <item>
-                                        <host>Template Futur-Tech App pfSense Active</host>
+                                        <host>Template pfSense Active</host>
                                         <key>vfs.fs.size[{#FSNAME},used]</key>
                                     </item>
                                 </graph_item>
@@ -1540,7 +1540,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                             <style>0</style>
                             <resource>
                                 <name>Active Connections (pie)</name>
-                                <host>Template Futur-Tech App pfSense Active</host>
+                                <host>Template pfSense Active</host>
                             </resource>
                             <width>450</width>
                             <height>250</height>
@@ -1562,7 +1562,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                             <style>0</style>
                             <resource>
                                 <name>Network Memory Buffer (pie)</name>
-                                <host>Template Futur-Tech App pfSense Active</host>
+                                <host>Template pfSense Active</host>
                             </resource>
                             <width>450</width>
                             <height>250</height>
@@ -1584,7 +1584,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                             <style>0</style>
                             <resource>
                                 <name>CPU load</name>
-                                <host>Template Futur-Tech App pfSense Active</host>
+                                <host>Template pfSense Active</host>
                             </resource>
                             <width>450</width>
                             <height>100</height>
@@ -1606,7 +1606,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                             <style>0</style>
                             <resource>
                                 <name>Memory Usage simple (pie)</name>
-                                <host>Template Futur-Tech App pfSense Active</host>
+                                <host>Template pfSense Active</host>
                             </resource>
                             <width>450</width>
                             <height>250</height>
@@ -1630,13 +1630,13 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
     </templates>
     <triggers>
         <trigger>
-            <expression>{Template Futur-Tech App pfSense Active:pfsense.expected_carp_status.last()}&lt;&gt;0 and {Template Futur-Tech App pfSense Active:pfsense.value[carp_status].last()}&lt;&gt;{$EXPECTED_CARP_STATUS}</expression>
+            <expression>{Template pfSense Active:pfsense.expected_carp_status.last()}&lt;&gt;0 and {Template pfSense Active:pfsense.value[carp_status].last()}&lt;&gt;{$EXPECTED_CARP_STATUS}</expression>
             <name>CARP Status not Expected</name>
             <priority>HIGH</priority>
             <description>pfSense CARP is not in the state Expected. This means that a failover could be in process.</description>
         </trigger>
         <trigger>
-            <expression>({Template Futur-Tech App pfSense Active:pfsense.value[system,version].last()}&lt;&gt;{Template Futur-Tech App pfSense Active:pfsense.value[system,installed_version].last()})=1</expression>
+            <expression>({Template pfSense Active:pfsense.value[system,version].last()}&lt;&gt;{Template pfSense Active:pfsense.value[system,installed_version].last()})=1</expression>
             <name>New Version of pfSense {ITEM.LASTVALUE} Available</name>
             <opdata>Current: {ITEM.LASTVALUE2}</opdata>
             <priority>INFO</priority>
@@ -1650,7 +1650,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
             <ymin_type_1>FIXED</ymin_type_1>
             <ymax_type_1>ITEM</ymax_type_1>
             <ymax_item_1>
-                <host>Template Futur-Tech App pfSense Active</host>
+                <host>Template pfSense Active</host>
                 <key>pfsense.states.max</key>
             </ymax_item_1>
             <graph_items>
@@ -1658,7 +1658,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                     <drawtype>GRADIENT_LINE</drawtype>
                     <color>FF2C27</color>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>pfsense.states.current</key>
                     </item>
                 </graph_item>
@@ -1677,7 +1677,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                     <color>5B5B5B</color>
                     <type>GRAPH_SUM</type>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>pfsense.states.max</key>
                     </item>
                 </graph_item>
@@ -1686,7 +1686,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                     <drawtype>GRADIENT_LINE</drawtype>
                     <color>FF2C27</color>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>pfsense.states.current</key>
                     </item>
                 </graph_item>
@@ -1699,7 +1699,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                     <drawtype>GRADIENT_LINE</drawtype>
                     <color>009900</color>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>system.cpu.switches</key>
                     </item>
                 </graph_item>
@@ -1708,7 +1708,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                     <drawtype>GRADIENT_LINE</drawtype>
                     <color>000099</color>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>system.cpu.intr</key>
                     </item>
                 </graph_item>
@@ -1722,7 +1722,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                 <graph_item>
                     <color>FFA619</color>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>system.cpu.load[percpu,avg1]</key>
                     </item>
                 </graph_item>
@@ -1730,7 +1730,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                     <sortorder>1</sortorder>
                     <color>E86E30</color>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>system.cpu.load[percpu,avg5]</key>
                     </item>
                 </graph_item>
@@ -1738,7 +1738,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                     <sortorder>2</sortorder>
                     <color>FF2F26</color>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>system.cpu.load[percpu,avg15]</key>
                     </item>
                 </graph_item>
@@ -1754,7 +1754,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                     <drawtype>GRADIENT_LINE</drawtype>
                     <color>FFE819</color>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>system.cpu.util[,interrupt]</key>
                     </item>
                 </graph_item>
@@ -1763,7 +1763,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                     <drawtype>GRADIENT_LINE</drawtype>
                     <color>E85D17</color>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>system.cpu.util[,nice]</key>
                     </item>
                 </graph_item>
@@ -1772,7 +1772,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                     <drawtype>GRADIENT_LINE</drawtype>
                     <color>DF26FF</color>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>system.cpu.util[,system]</key>
                     </item>
                 </graph_item>
@@ -1781,7 +1781,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                     <drawtype>GRADIENT_LINE</drawtype>
                     <color>1775E8</color>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>system.cpu.util[,user]</key>
                     </item>
                 </graph_item>
@@ -1789,7 +1789,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                     <sortorder>4</sortorder>
                     <color>03D933</color>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>system.cpu.util[,idle]</key>
                     </item>
                 </graph_item>
@@ -1808,7 +1808,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                     <color>003300</color>
                     <type>GRAPH_SUM</type>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>vm.memory.size[available]</key>
                     </item>
                 </graph_item>
@@ -1816,7 +1816,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                     <sortorder>1</sortorder>
                     <color>005500</color>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>vm.memory.size[free]</key>
                     </item>
                 </graph_item>
@@ -1824,7 +1824,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                     <sortorder>2</sortorder>
                     <color>007700</color>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>vm.memory.size[cached]</key>
                     </item>
                 </graph_item>
@@ -1832,7 +1832,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                     <sortorder>3</sortorder>
                     <color>009900</color>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>vm.memory.size[inactive]</key>
                     </item>
                 </graph_item>
@@ -1845,14 +1845,14 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
             <ymin_type_1>FIXED</ymin_type_1>
             <ymax_type_1>ITEM</ymax_type_1>
             <ymax_item_1>
-                <host>Template Futur-Tech App pfSense Active</host>
+                <host>Template pfSense Active</host>
                 <key>vm.memory.size[total]</key>
             </ymax_item_1>
             <graph_items>
                 <graph_item>
                     <color>00EE00</color>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>vm.memory.size[wired]</key>
                     </item>
                 </graph_item>
@@ -1860,7 +1860,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                     <sortorder>1</sortorder>
                     <color>00CC00</color>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>vm.memory.size[active]</key>
                     </item>
                 </graph_item>
@@ -1868,7 +1868,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                     <sortorder>2</sortorder>
                     <color>007700</color>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>vm.memory.size[inactive]</key>
                     </item>
                 </graph_item>
@@ -1876,7 +1876,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                     <sortorder>3</sortorder>
                     <color>005500</color>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>vm.memory.size[cached]</key>
                     </item>
                 </graph_item>
@@ -1884,7 +1884,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                     <sortorder>4</sortorder>
                     <color>003300</color>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>vm.memory.size[free]</key>
                     </item>
                 </graph_item>
@@ -1902,7 +1902,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                 <graph_item>
                     <color>003300</color>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>vm.memory.size[available]</key>
                     </item>
                 </graph_item>
@@ -1910,7 +1910,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                     <sortorder>1</sortorder>
                     <color>00DD00</color>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>kt.mem.used</key>
                     </item>
                 </graph_item>
@@ -1923,14 +1923,14 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
             <ymin_type_1>FIXED</ymin_type_1>
             <ymax_type_1>ITEM</ymax_type_1>
             <ymax_item_1>
-                <host>Template Futur-Tech App pfSense Active</host>
+                <host>Template pfSense Active</host>
                 <key>pfsense.mbuf.max</key>
             </ymax_item_1>
             <graph_items>
                 <graph_item>
                     <color>B26E16</color>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>pfsense.mbuf.current</key>
                     </item>
                 </graph_item>
@@ -1938,7 +1938,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                     <sortorder>1</sortorder>
                     <color>FFCE8E</color>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>pfsense.mbuf.cache</key>
                     </item>
                 </graph_item>
@@ -1957,7 +1957,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                     <color>5B5B5B</color>
                     <type>GRAPH_SUM</type>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>pfsense.mbuf.max</key>
                     </item>
                 </graph_item>
@@ -1965,7 +1965,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                     <sortorder>1</sortorder>
                     <color>FFCE8E</color>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>pfsense.mbuf.cache</key>
                     </item>
                 </graph_item>
@@ -1973,7 +1973,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                     <sortorder>2</sortorder>
                     <color>B26E16</color>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>pfsense.mbuf.current</key>
                     </item>
                 </graph_item>
@@ -1993,7 +1993,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                     <color>5B5B5B</color>
                     <type>GRAPH_SUM</type>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>system.swap.size[,total]</key>
                     </item>
                 </graph_item>
@@ -2001,7 +2001,7 @@ If you want to skip the trigger for this service, add the macro $PFSENSE_SRVC_MO
                     <sortorder>1</sortorder>
                     <color>FFFF33</color>
                     <item>
-                        <host>Template Futur-Tech App pfSense Active</host>
+                        <host>Template pfSense Active</host>
                         <key>system.swap.size[,used]</key>
                     </item>
                 </graph_item>
