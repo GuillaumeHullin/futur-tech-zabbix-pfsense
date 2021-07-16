@@ -166,15 +166,15 @@ function pfz_interface_speedtest_value($ifname, $value){
 
 
 function pfz_speedtest_cron(){
-     require_once("services.inc");
-     $ifdescrs = get_configured_interface_with_descr(true);
-     $ifaces = get_interface_arr();
-     $pf_interface_name='';
-     $subvalue=false;    
+	require_once("services.inc");
+	$ifdescrs = get_configured_interface_with_descr(true);
+    $ifaces = get_interface_arr();
+    $pf_interface_name='';
+    $subvalue=false;    
 		                       
-     $ifcs = pfz_interface_discovery(true, true);    
+    $ifcs = pfz_interface_discovery(true, true);    
     
-     foreach ($ifcs as $ifname) {    	  
+    foreach ($ifcs as $ifname) {    	  
           
           foreach ($ifdescrs as $ifn => $ifd){
 		      $ifinfo = get_interface_info($ifn);
@@ -196,7 +196,7 @@ function pfz_speedtest_cron(){
 //installs a cron job for speedtests
 function pfz_speedtest_cron_install($enable=true){
 	//Install Cron Job
-	$command = "/usr/local/bin/php " . __FILE__ . " speedtest_cron"; 
+	$command = "/usr/local/bin/php " . __FILE__ . " speedtest_cron";
 	install_cron_job($command, $enable, $minute = "*/15", "*", "*", "*", "*", "root", true);
 }        	
 
@@ -204,6 +204,7 @@ function pfz_speedtest_cron_install($enable=true){
 function pfz_speedtest_exec ($ifname, $ipaddr){
 	
 	$filename = "/tmp/speedtest-$ifname";
+	$filetemp = "$filename.tmp";
 	$filerun = "/tmp/speedtest-run"; 
 	
 	if ( (time()-filemtime($filename) > SPEEDTEST_INTERVAL * 3600) || (file_exists($filename)==false) ) {
@@ -212,8 +213,9 @@ function pfz_speedtest_exec ($ifname, $ipaddr){
 
 		if (file_exists($filerun)==false) {
 	  		touch($filerun);
-	  		$st_command = "/usr/local/bin/speedtest --source $ipaddr --json > $filename";
+	  		$st_command = "/usr/local/bin/speedtest --source $ipaddr --json > $filetemp";
 			exec ($st_command);
+			rename($filetemp,$filename);
 			@unlink($filerun);
 		}
 	}	
@@ -525,14 +527,15 @@ function pfz_gw_value($gw, $valuekey) {
      if(array_key_exists($gw,$gws)) {
           $value = $gws[$gw][$valuekey];
           if ($valuekey=="status") { 
-               if ($gws[$gw]["substatus"]<>"none") 
-                    $value = $gws[$gw]["substatus"];
+			if ($gws[$gw]["substatus"]<>"none") 
+				 $value = $gws[$gw]["substatus"];
 
-               $value = pfz_valuemap("gateway.status", $value);
-          }     
-          echo $value;         
+			$value = pfz_valuemap("gateway.status", $value);
+	   }     
+	   echo $value;         
      }
 }
+
 
 // IPSEC Discovery
 function pfz_ipsec_discovery_ph1(){
@@ -671,11 +674,13 @@ function pfz_ipsec_status($ikeid,$reqid=-1,$valuekey='state'){
 			}
 			if ($ikesa['version'] == 1) {
 				$ph1idx = $con_id/1000;
+				if ($ph1idx>100) $ph1idx = $ph1idx/100;
 				$ipsecconnected[$ph1idx] = $ph1idx;
 			} else {
 				if (!ipsec_ikeid_used($con_id)) {
 					// probably a v2 with split connection then
 					$ph1idx = $con_id/1000;
+					if ($ph1idx>100) $ph1idx = $ph1idx/100;
 					$ipsecconnected[$ph1idx] = $ph1idx;
 				} else {
 					$ipsecconnected[$con_id] = $ph1idx = $con_id;
@@ -1167,9 +1172,9 @@ switch (strtolower($argv[1])){
           pfz_gw_rawstatus();
           break;
 	 case "if_speedtest_value":
-	     pfz_speedtest_cron_install();
-	 	pfz_interface_speedtest_value($argv[2],$argv[3]);
-	 	break;
+	      pfz_speedtest_cron_install();
+	 	  pfz_interface_speedtest_value($argv[2],$argv[3]);
+	 	  break;
      case "openvpn_servervalue":
           pfz_openvpn_servervalue($argv[2],$argv[3]);
           break;
