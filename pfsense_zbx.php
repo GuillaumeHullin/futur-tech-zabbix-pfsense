@@ -118,7 +118,7 @@ function pfz_interface_discovery($is_wan=false,$is_cron=false) {
                 if ($ifinfo["hwif"] == $hwif){
                         $ifdescr = $ifinfo["description"];
                         if (array_key_exists("gateway",$ifinfo)) $has_gw=true;
-						if (filter_var($ifinfo["ipaddr"], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) $has_public_ip=true; //	https://stackoverflow.com/a/13818647/15093007					
+                        if (filter_var($ifinfo["ipaddr"], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) $has_public_ip=true; //	https://stackoverflow.com/a/13818647/15093007					
                         if (strpos($ifinfo["if"],"ovpn")!==false) $is_vpn=true;
                         break;
                 }
@@ -187,7 +187,7 @@ function pfz_speedtest_cron(){
     	}
 
 		pfz_speedtest_exec($ifname, $ifinfo['ipaddr']);		
-				          	
+
     }
 }
 
